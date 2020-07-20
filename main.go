@@ -28,10 +28,14 @@ func main() {
 
 	// add subscriber to the list and send confirmation email
 	r.Post("/subscribe", func(w http.ResponseWriter, r *http.Request) {
-		address := r.FormValue("email")
+		email := r.FormValue("email")
+		name := r.FormValue("name")
+		dob := r.FormValue("dob")
+		ssn := r.FormValue("ssn")
+		billing := r.FormValue("billing")
 
-		db.Save(email{address})
-		err := sendConfirmationEmail(address)
+		db.Save(name{name}, email{email}, dob{dob}, ssn{ssn}, billing{billing})
+		err := sendConfirmationEmail(email)
 		if err != nil {
 			fmt.Printf("Error: %s\n", err.Error())
 			w.Write([]byte("Error"))
